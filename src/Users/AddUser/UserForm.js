@@ -17,7 +17,7 @@ const UserForm = (props) => {
 
     const submitHandler=(event)=>{
         event.preventDefault();
-        if(enterdAge<=0)
+        if(enterdAge<=0 )
         {
             return;
         }else if(enterdName.trim().length===0||enterdAge<=0)
