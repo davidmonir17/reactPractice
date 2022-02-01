@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import Button from '../../UI/Button';
 import Card from '../../UI/Card';
+import ErrorModel from '../../UI/ErrorModel';
 import classes from './UserForm.module.css'
 const UserForm = (props) => {
     const[enterdName,setEntredName]=useState('');
     const[enterdAge,setEntredAge]=useState('');
+    const [show,SetShow]=useState(false);
+    const [err,SetEror]=useState();
     
     const NameHadler=(event)=>{
         setEntredName(event.target.value);
@@ -17,21 +20,40 @@ const UserForm = (props) => {
 
     const submitHandler=(event)=>{
         event.preventDefault();
-        if(enterdAge<=0 )
+         if(enterdName.trim().length===0||enterdAge.length===0)
         {
-            return;
-        }else if(enterdName.trim().length===0||enterdAge<=0)
-        {
+          SetEror({
+            title:'Invalid Input !',
+            message:'Please Enter a Valid Name And Age '
+          })
+          SetShow(true);
            return;
         }
+        else if(enterdAge<=0 )
+        { 
+          SetEror({
+            title:'Invalid Age !',
+            message:'Please Enter a Valid Age Grater Than 0'
+          });
+          SetShow(true);
+            return;
+        }
         else{
-        console.log(enterdName);
-        console.log(enterdAge);
+          const userY={
+            name:enterdName,
+            age:enterdAge
+          }
+       props.sendUser(userY);
         setEntredAge('');
         setEntredName('');
         }
     }
+    const CliOkay=()=>{
+      SetShow(false);
+    }
   return (
+  <div>
+    {show&& <ErrorModel ICancel={CliOkay} title={err.title} message={err.message} />}
     <Card className={classes.input}>
       <form onSubmit={submitHandler} className='new-expense'>
          
@@ -55,6 +77,7 @@ const UserForm = (props) => {
            
       </form>
     </Card>
+    </div>
   );
 };
 
