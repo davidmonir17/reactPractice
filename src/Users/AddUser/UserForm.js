@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '../../UI/Button';
 import Card from '../../UI/Card';
 import ErrorModel from '../../UI/ErrorModel';
+import Wrapper from '../../Wraaper/Wraaper';
 import classes from './UserForm.module.css'
 const UserForm = (props) => {
     const[enterdName,setEntredName]=useState('');
@@ -52,7 +53,7 @@ const UserForm = (props) => {
       SetShow(false);
     }
   return (
-  <div>
+  <Wrapper>
     {show&& <ErrorModel ICancel={CliOkay} title={err.title} message={err.message} />}
     <Card className={classes.input}>
       <form onSubmit={submitHandler} className='new-expense'>
@@ -77,7 +78,7 @@ const UserForm = (props) => {
            
       </form>
     </Card>
-    </div>
+    </Wrapper>
   );
 };
 
